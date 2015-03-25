@@ -16,10 +16,10 @@ void addColumn(){ // select column_name, data_type from information_schema.colum
 	system("clear");
 
 	printf("Column name: ");
-	scanf("%s", &columnname);
+	scanf("%s", columnname);
 
 	printf("Type: ");
-	scanf("%s", &typename);
+	scanf("%s", typename);
 
 	char sql[255];
 	sprintf(sql, "ALTER TABLE kurs ADD %s %s;", columnname, typename);
@@ -42,12 +42,12 @@ void createTrigger(){
 		}
 	}while(from > to);
 
-	char sql[255];
-	sprintf(sql, "CREATE OR REPLACE FUNCTION valid_waluta() RETURNS TRIGGER AS $$ BEGIN IF NEW.value < %lf OR NEW.value > %lf THEN RAISE EXCEPTION \'Wartosc poza granicami.\'; END IF; RETURN NEW; END; $$ LANGUAGE 'plpgsql';", from, to);
+	char sql[400];
+	sprintf(sql, "CREATE OR REPLACE FUNCTION valid_waluta() RETURNS TRIGGER AS $$ BEGIN IF NEW.value < CAST(%lf AS MONEY) OR NEW.value > CAST(%lf AS MONEY) THEN RAISE EXCEPTION \'Wartosc poza granicami.\'; END IF; RETURN NEW; END; $$ LANGUAGE 'plpgsql';", from, to);
 	doSQL(sql);
 
 	doSQL("DROP TRIGGER IF EXISTS kurs_insert ON kurs");
-    doSQL("CREATE TRIGGER kurs_insert BEFORE INSERT ON kurs FOR EACH ROW EXECUTE PROCEDURE valid_waluta();");
+    doSQL("CREATE TRIGGER kurs_insert BEFORE INSERT OR UPDATE ON kurs FOR EACH ROW EXECUTE PROCEDURE valid_waluta();");
 }
 
 void dropTrigger(){
