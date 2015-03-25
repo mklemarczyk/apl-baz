@@ -1,0 +1,6 @@
+
+#Ignore program file
+**/program
+
+#Ignore ANSI C object files
+*.o
