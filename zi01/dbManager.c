@@ -11,6 +11,10 @@ void openConnection(){
 		printf("[ERROR]: Connection failed: %s\n", PQerrorMessage(conn));
 }
 
+PGconn * getConnection(){
+	return conn;
+}
+
 void closeConnection(){
 	PQfinish(conn);
 }
