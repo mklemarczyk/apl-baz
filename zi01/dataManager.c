@@ -15,8 +15,6 @@ void insertRow(){
 		return;
 	}
 
-	int sqlLen = strlen(sql);
-
 	if(PQresultStatus(result) == PGRES_TUPLES_OK) {
 		int m;
 		int nrows   = PQntuples(result);
@@ -43,6 +41,7 @@ void insertRow(){
 			}
 		}
 	}
+
 	PQclear(result);
 
 	strcat(sql, ");");
@@ -51,7 +50,69 @@ void insertRow(){
 }
 
 void modifyRow(){
-	
+	int id;
+
+	system("clear");
+
+	printf("Row id: ");
+	scanf("%d", &id);
+
+	char command[255];
+	sprintf(command, "SELECT * FROM kurs WHERE id = %d;", id);
+
+	PGconn * conn = getConnection();
+	PGresult *result;
+
+	char* msg;
+	result = PQexec(conn, command);
+	msg = PQresultErrorMessage(result);
+	if(strlen(msg) > 0){
+		printf("Error: %s\n", msg);
+		return;
+	}
+
+	char sql[1500] = "UPDATE kurs SET ";
+
+	if(PQresultStatus(result) == PGRES_TUPLES_OK) {
+		int n;
+		int m;
+		int nrows   = PQntuples(result);
+		int nfields = PQnfields(result);
+		if(nrows == 0){
+			printf("Nie znaleziono kolumn w tabeli kurs.\n");
+			return;
+		}
+		
+		int inseted = 0;
+		for(m = 0; m < nrows; m++) {
+			for(n = 0; n < nfields; n++) {
+				char* name = PQfname(result, n);
+				int type = PQftype(result, n);
+				if(strcmp(name, "id") == 0){
+					continue;
+				}else{
+					char p[255];
+					printf("%s: ", name);
+					scanf("%s", p);
+					if(strcmp(p, "$") != 0){
+						if(inseted > 0){
+							strcat(sql, ", ");
+						}
+						strcat(sql, name);
+						strcat(sql, " = '");
+						strcat(sql, p);
+						strcat(sql, "'");
+						inseted++;
+					}
+				}
+			}
+		}
+	}
+	PQclear(result);
+
+	sprintf(sql, "%s WHERE id = %d;", sql, id);
+
+	doSQL(sql);
 }
 
 void removeRow(){
@@ -116,29 +177,3 @@ void showDataAsHtml(){
 void importData(){
 	
 }
-
-/*int main(){
-  PGresult *result;
-  PGconn   *conn;
-
-  conn = PQconnectdb("host=localhost port=5432 dbname=nazwa user=login password=haslo");
-  if(PQstatus(conn) == CONNECTION_OK) {
-    printf("connection made\n");
-
-    doSQL(conn, "DROP TABLE number");
-    doSQL(conn, "CREATE TABLE number(value INTEGER PRIMARY KEY, name VARCHAR)");
-    doSQL(conn, "INSERT INTO number values(42, 'The Answer')");
-    doSQL(conn, "INSERT INTO number values(29, 'My Age')");
-    doSQL(conn, "INSERT INTO number values(30, 'Anniversary')");
-    doSQL(conn, "INSERT INTO number values(66, 'Clickety-Click')");
-    doSQL(conn, "SELECT * FROM number");
-    doSQL(conn, "UPDATE number SET name = 'Zaphod' WHERE value = 42");
-    doSQL(conn, "DELETE FROM number WHERE value = 29");
-    doSQL(conn, "SELECT * FROM number");
-  }
-  else
-    printf("connection failed: %s\n", PQerrorMessage(conn));
-
-  PQfinish(conn);
-  return EXIT_SUCCESS;
-}*/
