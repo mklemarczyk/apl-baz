@@ -22,48 +22,7 @@ void removeRow(){
 }
 
 void showData(){
-	char * command = "SELECT * FROM kurs;";
-	PGconn * conn = getConnection();
-	PGresult *result;
-	char* msg;
-
-	printf("[INFO]: %s\n", command);
-
-	result = PQexec(conn, command);
-
-	msg = PQresStatus(PQresultStatus(result));
-	if(strlen(msg) > 0)
-		printf("[INFO]: status is     : %s\n", msg);
-
-	msg = PQcmdTuples(result);
-	if(strlen(msg) > 0)
-		printf("[INFO]: #rows affected: %s\n", msg);
-
-	msg = PQresultErrorMessage(result);
-	if(strlen(msg) > 0)
-		printf("[INFO]: message: %s\n", msg);
-
-	switch(PQresultStatus(result)) {
-		case PGRES_TUPLES_OK:{
-			int n = 0;
-			int m = 0;
-			int nrows   = PQntuples(result);
-			int nfields = PQnfields(result);
-			printf("[INFO]: number of rows returned   = %d\n", nrows);
-			printf("[INFO]: number of fields returned = %d\n", nfields);
-			for(n = 0; n < nfields; n++){
-				printf("%s\t| ", PQfname(result, n));
-				printf("%d\t| ", PQftype(result, n));
-			}
-			printf("\n");
-			for(m = 0; m < nrows; m++) {
-				for(n = 0; n < nfields; n++)
-					printf("%s = %s, ", PQfname(result, n),PQgetvalue(result,m,n));
-					printf("\n");
-			}
-		}
-	}
-	PQclear(result);
+	doSQL"SELECT * FROM kurs;";
 }
 
 void showDataAsHtml(){
