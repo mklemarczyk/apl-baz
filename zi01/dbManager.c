@@ -31,9 +31,11 @@ void doSQL(char *command){
 	if(strlen(msg) > 0)
 		printf("[INFO]: status is     : %s\n", msg);
 
-	msg = PQcmdTuples(result);
-	if(strlen(msg) > 0)
-		printf("[INFO]: #rows affected: %s\n", msg);
+	if(PQresultStatus(result) != PGRES_TUPLES_OK){
+		msg = PQcmdTuples(result);
+		if(strlen(msg) > 0)
+			printf("[INFO]: #rows affected: %s\n", msg);
+	}
 
 	msg = PQresultErrorMessage(result);
 	if(strlen(msg) > 0)

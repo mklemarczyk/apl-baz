@@ -22,7 +22,7 @@ void removeRow(){
 }
 
 void showData(){
-	doSQL"SELECT * FROM kurs;";
+	doSQL("SELECT * FROM kurs;");
 }
 
 void showDataAsHtml(){
