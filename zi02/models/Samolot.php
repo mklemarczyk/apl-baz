@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "samalot".
+ * This is the model class for table "samolot".
  *
  * @property integer $id
  * @property string $model
@@ -14,14 +14,14 @@ use Yii;
  *
  * @property Lot[] $lots
  */
-class Samalot extends \yii\db\ActiveRecord
+class Samolot extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'samalot';
+        return 'samolot';
     }
 
     /**

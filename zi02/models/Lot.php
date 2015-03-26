@@ -16,7 +16,7 @@ use Yii;
  * @property integer $lotnisko_end
  *
  * @property Bilet[] $bilets
- * @property Samalot $samolot
+ * @property Samolot $samolot
  * @property Lotnisko $lotniskoStart
  * @property Lotnisko $lotniskoEnd
  */
@@ -72,7 +72,7 @@ class Lot extends \yii\db\ActiveRecord
      */
     public function getSamolot()
     {
-        return $this->hasOne(Samalot::className(), ['id' => 'samolot_id']);
+        return $this->hasOne(Samolot::className(), ['id' => 'samolot_id']);
     }
 
     /**
