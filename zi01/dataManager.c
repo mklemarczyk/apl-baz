@@ -172,6 +172,7 @@ void showDataAsHtml(){
 
 	fprintf(fp, "</body>\n</html>\n");
 	fclose(fp);
+	printf("Plik zapisany pod nazwa: out.html");
 }
 
 void importData(){
