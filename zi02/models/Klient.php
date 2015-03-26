@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $imie
  * @property string $nazwisko
- * @property integer $user_id
  *
  * @property Zakup[] $zakups
  */
@@ -30,8 +29,8 @@ class Klient extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'imie', 'nazwisko', 'user_id'], 'required'],
-            [['id', 'user_id'], 'integer'],
+            [['id', 'imie', 'nazwisko'], 'required'],
+            [['id'], 'integer'],
             [['imie', 'nazwisko'], 'string', 'max' => 255]
         ];
     }
@@ -45,7 +44,6 @@ class Klient extends \yii\db\ActiveRecord
             'id' => 'ID',
             'imie' => 'Imie',
             'nazwisko' => 'Nazwisko',
-            'user_id' => 'User ID',
         ];
     }
 
