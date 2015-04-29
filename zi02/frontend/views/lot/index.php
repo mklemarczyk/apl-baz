@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel frontend\models\LotSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lots';
+$this->title = 'Loty';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lot-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Lot', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Stwórz Lot', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

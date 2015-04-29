@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lot */
 
-$this->title = 'Update Lot: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lots', 'url' => ['index']];
+$this->title = 'Zmień lot: ' . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Loty', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Zmień';
 ?>
 <div class="lot-update">
 
