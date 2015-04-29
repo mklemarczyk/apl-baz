@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel frontend\models\LotniskoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Lotniskos';
+$this->title = 'Lotniska';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lotnisko-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Lotnisko', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Stwórz lotnisko', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

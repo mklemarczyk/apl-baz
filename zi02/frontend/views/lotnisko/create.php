@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lotnisko */
 
-$this->title = 'Create Lotnisko';
-$this->params['breadcrumbs'][] = ['label' => 'Lotniskos', 'url' => ['index']];
+$this->title = 'Stwórz lotnisko';
+$this->params['breadcrumbs'][] = ['label' => 'Lotniska', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lotnisko-create">

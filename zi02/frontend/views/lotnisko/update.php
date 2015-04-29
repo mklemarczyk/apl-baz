@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lotnisko */
 
-$this->title = 'Update Lotnisko: ' . ' ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Lotniskos', 'url' => ['index']];
+$this->title = 'Zmień lotnisko: ' . ' ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Lotniska', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Zmień';
 ?>
 <div class="lotnisko-update">
 
