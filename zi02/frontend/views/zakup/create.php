@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Zakup */
 
-$this->title = 'Create Zakup';
-$this->params['breadcrumbs'][] = ['label' => 'Zakups', 'url' => ['index']];
+$this->title = 'Stwórz zakup';
+$this->params['breadcrumbs'][] = ['label' => 'Zakupy', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="zakup-create">
