@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel frontend\models\BiletSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Bilets';
+$this->title = 'Bilety';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bilet-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Bilet', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Stwórz bilet', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Bilet */
 
-$this->title = 'Create Bilet';
-$this->params['breadcrumbs'][] = ['label' => 'Bilets', 'url' => ['index']];
+$this->title = 'Stwórz bilet';
+$this->params['breadcrumbs'][] = ['label' => 'Bilety', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="bilet-create">

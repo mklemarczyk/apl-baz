@@ -92,6 +92,12 @@ class BiletController extends Controller
     {
         $model = $this->findModel($id);
 
+		$loty = Lot::find()->all();
+		$loty = ArrayHelper::map($loty, 'id', 'numer_lotu');
+
+		$zakupy = Zakup::find()->all();
+		$zakupy = ArrayHelper::map($zakupy, 'id', function ($model){ return $model->data_zakupu.' '.$model->klient->nazwisko.' '.$model->klient->imie; });
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -128,7 +134,7 @@ class BiletController extends Controller
         if (($model = Bilet::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Żądana strona nie istnieje.');
         }
     }
 }
