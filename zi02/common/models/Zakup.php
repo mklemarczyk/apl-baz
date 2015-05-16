@@ -31,7 +31,8 @@ class Zakup extends \yii\db\ActiveRecord
     {
         return [
             [['data_zakupu', 'klient_id'], 'required'],
-            [['data_zakupu'], 'safe'],
+            [['data_zakupu'], 'date', 'format' => 'yyyy-MM-dd hh:mm:ss'],
+			['data_zakupu', 'compare', 'operator' => '<', 'compareValue' => date('Y-m-d')],
             [['klient_id'], 'integer']
         ];
     }
@@ -43,14 +44,14 @@ class Zakup extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'data_zakupu' => 'Data Zakupu',
-            'klient_id' => 'Klient ID',
+            'data_zakupu' => 'Data zakupu',
+            'klient_id' => 'Klient',
         ];
     }
 
 	public function getNazwa()
 	{
-		return $this->data_zakupu.' '.$this->klient->nazwa;
+		return Yii::$app->formatter->asDatetime($this->data_zakupu).' '.$this->klient->nazwa;
 	}
 
     /**

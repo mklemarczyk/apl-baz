@@ -30,7 +30,7 @@ class Klient extends \yii\db\ActiveRecord
     {
         return [
             [['imie', 'nazwisko'], 'required'],
-            [['imie', 'nazwisko'], 'string', 'max' => 255]
+            [['imie', 'nazwisko'], 'string', 'length' => [3, 255]]
         ];
     }
 

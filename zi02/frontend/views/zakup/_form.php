@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
-
     <?= $form->field($model, 'data_zakupu')->textInput() ?>
 
     <?= $form->field($model, 'klient_id')->dropDownList($klienci)->label('Klient') ?>

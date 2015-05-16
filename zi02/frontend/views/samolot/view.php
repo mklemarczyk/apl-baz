@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Samolot */
 
-$this->title = $model->id;
+$this->title = $model->nazwa;
 $this->params['breadcrumbs'][] = ['label' => 'Samoloty', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             // 'id',
             'model',
-            'rok_produkcji',
-            'liczba_miejsc',
+            'rok_produkcji:date',
+            'liczba_miejsc:integer',
         ],
     ]) ?>
 

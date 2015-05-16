@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lot */
 
-$this->title = 'Zmień lot: ' . ' ' . $model->id;
+$this->title = 'Zmień lot: ' . ' ' . $model->nazwa;
 $this->params['breadcrumbs'][] = ['label' => 'Loty', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->nazwa, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Zmień';
 ?>
 <div class="lot-update">

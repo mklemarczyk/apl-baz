@@ -8,7 +8,8 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
 		'formatter' => [
-			'dateFormat' => 'dd.MM.yyyy',
+			'dateFormat' => 'dd MMMM yyyy',
+			'datetimeFormat' => 'dd MMMM yyyy, hh:mm',
 			'decimalSeparator' => ',',
 			'thousandSeparator' => ' ',
 			'currencyCode' => 'PLN',

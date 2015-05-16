@@ -27,11 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
             'numer_lotu',
-            'data_wylotu',
+            'data_wylotu:datetime',
             'czas_lotu',
-            'samolot.nazwa',
-            'lotniskoStart.nazwa',
-            'lotniskoEnd.nazwa',
+            'samolot.nazwa:text:Samolot',
+            'lotniskoStart.nazwa:text:Lotnisko wylotu',
+            'lotniskoEnd.nazwa:text:Lotnisko przylotu',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

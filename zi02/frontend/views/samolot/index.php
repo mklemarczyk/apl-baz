@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
             'model',
-            'rok_produkcji',
-            'liczba_miejsc',
+            'rok_produkcji:date',
+            'liczba_miejsc:integer',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

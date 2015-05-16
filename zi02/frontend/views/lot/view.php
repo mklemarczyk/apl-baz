@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Lot */
 
-$this->title = $model->id;
+$this->title = $model->nazwa;
 $this->params['breadcrumbs'][] = ['label' => 'Loty', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             // 'id',
             'numer_lotu',
-            'data_wylotu',
+            'data_wylotu:datetime',
             'czas_lotu',
-            'samolot.nazwa',
-            'lotniskoStart.nazwa',
-            'lotniskoEnd.nazwa',
+            'samolot.nazwa:text:Samolot',
+            'lotniskoStart.nazwa:text:Lotnisko wylotu',
+            'lotniskoEnd.nazwa:text:Lotnisko przylotu',
         ],
     ]) ?>
 

@@ -37,8 +37,8 @@ class Lot extends \yii\db\ActiveRecord
     {
         return [
             [['numer_lotu', 'data_wylotu', 'czas_lotu', 'samolot_id', 'lotnisko_start', 'lotnisko_end'], 'required'],
-            [['data_wylotu'], 'safe'],
-            [['czas_lotu', 'samolot_id', 'lotnisko_start', 'lotnisko_end'], 'integer'],
+            [['data_wylotu'], 'date', 'format' => 'yyyy-MM-dd hh:mm:ss'],
+            [['czas_lotu', 'samolot_id', 'lotnisko_start', 'lotnisko_end'], 'integer', 'min' => 1],
             [['numer_lotu'], 'string', 'max' => 20]
         ];
     }
@@ -50,12 +50,12 @@ class Lot extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'numer_lotu' => 'Numer Lotu',
-            'data_wylotu' => 'Data Wylotu',
-            'czas_lotu' => 'Czas Lotu',
-            'samolot_id' => 'Samolot ID',
-            'lotnisko_start' => 'Lotnisko Start',
-            'lotnisko_end' => 'Lotnisko End',
+            'numer_lotu' => 'Numer lotu',
+            'data_wylotu' => 'Data wylotu',
+            'czas_lotu' => 'Czas lotu',
+            'samolot_id' => 'Samolot',
+            'lotnisko_start' => 'Lotnisko wylotu',
+            'lotnisko_end' => 'Lotnisko przylotu',
         ];
     }
 

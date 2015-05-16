@@ -36,6 +36,18 @@ class SignupForm extends Model
     }
 
     /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Login',
+            'password' => 'Hasło',
+            'email' => 'Email',
+        ];
+    }
+
+    /**
      * Signs user up.
      *
      * @return User|null the saved model or null if saving fails

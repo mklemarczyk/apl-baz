@@ -36,8 +36,8 @@ class Bilet extends \yii\db\ActiveRecord
     {
         return [
             [['klasa', 'numer_miejsca', 'cena', 'imie', 'nazwisko', 'lot_id', 'zakup_id'], 'required'],
-            [['klasa', 'numer_miejsca', 'lot_id', 'zakup_id'], 'integer'],
-            [['cena'], 'number'],
+            [['klasa', 'numer_miejsca', 'lot_id', 'zakup_id'], 'integer', 'min' => 1],
+            [['cena'], 'number', 'min' => '0.01'],
             [['imie', 'nazwisko'], 'string', 'max' => 255]
         ];
     }
@@ -50,18 +50,18 @@ class Bilet extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'klasa' => 'Klasa',
-            'numer_miejsca' => 'Numer Miejsca',
+            'numer_miejsca' => 'Numer miejsca',
             'cena' => 'Cena',
             'imie' => 'Imie',
             'nazwisko' => 'Nazwisko',
-            'lot_id' => 'Lot ID',
-            'zakup_id' => 'Zakup ID',
+            'lot_id' => 'Lot',
+            'zakup_id' => 'Zakup',
         ];
     }
 
 	public function getNazwa()
 	{
-		return $this->lot->nazwa.'(miejsce '.$this->klient->numer_miejsca.')';
+		return $this->lot->nazwa.'(miejsce '.$this->numer_miejsca.')';
 	}
 
     /**

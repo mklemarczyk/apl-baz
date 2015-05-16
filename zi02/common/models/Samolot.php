@@ -31,8 +31,10 @@ class Samolot extends \yii\db\ActiveRecord
     {
         return [
             [['model', 'rok_produkcji', 'liczba_miejsc'], 'required'],
-            [['rok_produkcji'], 'safe'],
-            [['liczba_miejsc'], 'integer'],
+            [['rok_produkcji'], 'date', 'format' => 'yyyy-MM-dd'],
+			['rok_produkcji', 'compare', 'operator' => '<=', 'compareValue' => date('Y-m-d')],
+            [['liczba_miejsc'], 'integer', 'min' => 0],
+			[['liczba_miejsc'], 'string', 'max' => 8],
             [['model'], 'string', 'max' => 50]
         ];
     }
@@ -45,14 +47,14 @@ class Samolot extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'model' => 'Model',
-            'rok_produkcji' => 'Rok Produkcji',
-            'liczba_miejsc' => 'Liczba Miejsc',
+            'rok_produkcji' => 'Rok produkcji',
+            'liczba_miejsc' => 'Liczba miejsc',
         ];
     }
 
 	public function getNazwa()
 	{
-		return $this->model.'('.$this->rok_produkcji.')';
+		return $this->model.'('.Yii::$app->formatter->asDate($this->rok_produkcji).')';
 	}
 
     /**

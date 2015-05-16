@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Zakup */
 
-$this->title = $model->id;
+$this->title = $model->nazwa;
 $this->params['breadcrumbs'][] = ['label' => 'Zakupy', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             // 'id',
-            'data_zakupu',
-            'klient.nazwa',
+            'data_zakupu:datetime',
+            'klient.nazwa:text:Klient',
         ],
     ]) ?>
 

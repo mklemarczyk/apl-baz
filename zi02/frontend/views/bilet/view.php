@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Bilet */
 
-$this->title = $model->id;
+$this->title = $model->nazwa;
 $this->params['breadcrumbs'][] = ['label' => 'Bilety', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -31,11 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'id',
             'klasa',
             'numer_miejsca',
-            'cena',
+            'cena:currency',
             'imie',
             'nazwisko',
-            'lot.nazwa',
-            'zakup.nazwa',
+            'lot.nazwa:text:Lot',
+            'zakup.nazwa:text:Zakup',
         ],
     ]) ?>
 
