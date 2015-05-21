@@ -1,0 +1,15 @@
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.csprojResolveAssemblyReference.cache
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.MainWindow.resources
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.Properties.Resources.resources
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.csproj.GenerateResource.Cache
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\bin\Debug\MilonAdmin.exe
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\bin\Debug\MilonAdmin.pdb
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.exe
+c:\users\maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.pdb
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.DodajPytanieWindow.resources
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.EdytujPytanieWindow.resources
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.DodajUzytkownikaWindow.resources
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.EdytujUzytkownikaWindow.resources
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\bin\Debug\MilonAdmin.exe.config
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.DodajOdpowiedzWindow.resources
+C:\Users\Maciej\documents\visual studio 14\Projects\MilonAdmin\MilonAdmin\obj\Debug\MilonAdmin.GUI.EdytujOdpowiedzWindow.resources
