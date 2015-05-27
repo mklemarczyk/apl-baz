@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="../libs/mysql_connector_java-5_1_35/mysql-connector-java.jar"/>
+	<classpathentry kind="lib" path="../libs/slf4j-1_7_12/slf4j-api-1.7.12.jar"/>
+	<classpathentry kind="lib" path="../libs/javalite_common-1_4_6/javalite-common.jar"/>
+	<classpathentry kind="lib" path="../libs/slf4j-1_7_12/slf4j-simple-1.7.12.jar"/>
+	<classpathentry kind="lib" path="../libs/activejdbc-1_4_6/activejdbc.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

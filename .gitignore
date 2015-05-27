@@ -4,3 +4,6 @@
 
 #Ignore ANSI C object files
 *.o
+
+#Ignore Eclipse build directory
+**/bin/
