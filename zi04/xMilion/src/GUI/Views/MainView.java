@@ -23,6 +23,7 @@ public final class MainView extends JFrame implements IMainView {
 		this.highscoreView = new HighscoreView();
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Milionerzy");
 	}
 
 	@Override
@@ -46,6 +47,8 @@ public final class MainView extends JFrame implements IMainView {
 				case Highscore:
 					this.remove(this.highscoreView);
 					break;
+				default:
+					break;
 			}
 		}
 		if (state != null) {
@@ -58,6 +61,8 @@ public final class MainView extends JFrame implements IMainView {
 					break;
 				case Highscore:
 					this.add(this.highscoreView);
+					break;
+				default:
 					break;
 			}
 		}

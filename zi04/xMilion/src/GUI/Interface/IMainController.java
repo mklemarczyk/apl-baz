@@ -5,7 +5,7 @@ public interface IMainController {
 	IMainView getView();
 
 	enum MainState{
-		Menu, Game, Highscore
+		Menu, Game, Highscore, Settings
 	}
 
 	void setMenuController(IMenuView menuView);

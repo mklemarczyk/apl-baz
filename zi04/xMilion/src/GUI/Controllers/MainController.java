@@ -28,6 +28,9 @@ public final class MainController implements IMainController {
 		User p = new User();
 		p.set("login", "Marilyn");
 		p.set("password", "Monroe");
+		p.set("email", "m@ko.pl");
+		p.set("birthdate", "1990-02-21");
+		p.set("is_player", 1);
 		p.saveIt();
 		
 		this._view.setState(MainState.Menu);

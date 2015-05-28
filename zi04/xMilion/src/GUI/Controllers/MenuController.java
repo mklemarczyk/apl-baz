@@ -72,7 +72,7 @@ public class MenuController implements IMenuController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			mainController.getView().setState(IMainController.MainState.Game);
+			mainController.getView().setState(IMainController.MainState.Highscore);
 		}
 
 	}
@@ -81,7 +81,7 @@ public class MenuController implements IMenuController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			mainController.getView().setState(IMainController.MainState.Game);
+			mainController.getView().setState(IMainController.MainState.Settings);
 		}
 
 	}
