@@ -10,4 +10,8 @@ public interface IGameController {
 
 	void setMainController(IMainController mainController);
 
+	void loadNewTest();
+
+	ActionListener getAnswerEvent();
+
 }

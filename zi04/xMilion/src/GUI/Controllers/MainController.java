@@ -3,6 +3,8 @@ package GUI.Controllers;
 import org.javalite.activejdbc.Base;
 
 import Domain.User;
+import GUI.Interface.IEndGameController;
+import GUI.Interface.IEndGameView;
 import GUI.Interface.IGameView;
 import GUI.Interface.IHighscoreView;
 import GUI.Interface.IMainController;
@@ -18,6 +20,7 @@ public final class MainController implements IMainController {
 	private IMenuController menu;
 	private IGameController game;
 	private IHighscoreController highscore;
+	private IEndGameController endGame;
 	
 	public MainController(IMainView view){
 		this._view = view;
@@ -32,6 +35,8 @@ public final class MainController implements IMainController {
 		p.set("birthdate", "1990-02-21");
 		p.set("is_player", 1);
 		p.saveIt();
+		
+		Base.close();
 		
 		this._view.setState(MainState.Menu);
 		
@@ -61,5 +66,17 @@ public final class MainController implements IMainController {
 		this.highscore = new HighscoreController(highscoreView);
 		this.highscore.setMainController(this);
 		highscoreView.setController(this.highscore);
+	}
+	
+	@Override
+	public void setEndGameController(IEndGameView endGameView) {
+		this.endGame = new EndGameController(endGameView);
+		this.endGame.setMainController(this);
+		endGameView.setController(this.endGame);
+	}
+
+	@Override
+	public IGameController getGameController() {
+		return game;
 	}
 }

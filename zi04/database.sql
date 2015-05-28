@@ -17,13 +17,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `option`
+-- Table structure for table `options`
 --
 
-CREATE TABLE IF NOT EXISTS `option` (
+CREATE TABLE IF NOT EXISTS `options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `question_id` int(11) NOT NULL,
+  `is_correct` bit(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

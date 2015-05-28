@@ -5,7 +5,7 @@ public interface IMainController {
 	IMainView getView();
 
 	enum MainState{
-		Menu, Game, Highscore, Settings
+		Menu, Game, Highscore, Settings, EndGameSuccess, EndGameFailed
 	}
 
 	void setMenuController(IMenuView menuView);
@@ -14,4 +14,8 @@ public interface IMainController {
 	
 	void setHighscoreController(IHighscoreView highscoreView);
 	
+	void setEndGameController(IEndGameView endGameView);
+
+	IGameController getGameController();
+
 }

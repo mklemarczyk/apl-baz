@@ -1,5 +1,8 @@
 package GUI.Views;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 import GUI.Interface.IMainController;
@@ -14,6 +17,7 @@ public final class MainView extends JFrame implements IMainView {
 	private MenuView menuView;
 	private GameView gameView;
 	private HighscoreView highscoreView;
+	private EndGameView endGameView;
 
 	private MainState state;
 
@@ -21,6 +25,7 @@ public final class MainView extends JFrame implements IMainView {
 		this.menuView = new MenuView();
 		this.gameView = new GameView();
 		this.highscoreView = new HighscoreView();
+		this.endGameView = new EndGameView();
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Milionerzy");
@@ -32,6 +37,7 @@ public final class MainView extends JFrame implements IMainView {
 		this.controller.setMenuController(this.menuView);
 		this.controller.setGameController(this.gameView);
 		this.controller.setHighscoreController(this.highscoreView);
+		this.controller.setEndGameController(this.endGameView);
 	}
 
 	@Override
@@ -46,6 +52,12 @@ public final class MainView extends JFrame implements IMainView {
 					break;
 				case Highscore:
 					this.remove(this.highscoreView);
+					break;
+				case EndGameSuccess:
+					this.remove(this.endGameView);
+					break;
+				case EndGameFailed:
+					this.remove(this.endGameView);
 					break;
 				default:
 					break;
@@ -62,12 +74,33 @@ public final class MainView extends JFrame implements IMainView {
 				case Highscore:
 					this.add(this.highscoreView);
 					break;
+				case EndGameSuccess:
+					this.add(this.endGameView);
+					this.endGameView.setResult(true);
+					break;
+				case EndGameFailed:
+					this.add(this.endGameView);
+					this.endGameView.setResult(false);
+					break;
 				default:
 					break;
 			}
 		}
+		
 		this.state = state;
 		this.pack();
+		this.setSize(500,500);
+		
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Determine the new location of the window
+        int w = this.getSize().width;
+        int h = this.getSize().height;
+        int x = (dim.width-w)/2;
+        int y = (dim.height-h)/2;
+
+        // Move the window
+        this.setLocation(x, y);
 	}
 
 	@Override
