@@ -8,4 +8,6 @@ public interface IMainView extends GUI.Common.IWindow {
 
 	void setController(IMainController mainController);
 
+	void close();
+
 }

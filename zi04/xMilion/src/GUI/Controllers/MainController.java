@@ -41,17 +41,22 @@ public final class MainController implements IMainController {
 
 	@Override
 	public void setMenuController(IMenuView menuView) {
+		this.menu = new MenuController(menuView);
+		this.menu.setMainController(this);
 		menuView.setController(this.menu);
-		
 	}
 
 	@Override
 	public void setGameController(IGameView gameView) {
+		this.game = new GameController(gameView);
+		this.game.setMainController(this);
 		gameView.setController(this.game);
 	}
 
 	@Override
 	public void setHighscoreController(IHighscoreView highscoreView) {
+		this.highscore = new HighscoreController(highscoreView);
+		this.highscore.setMainController(this);
 		highscoreView.setController(this.highscore);
 	}
 }

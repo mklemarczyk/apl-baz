@@ -65,4 +65,9 @@ public final class MainView extends JFrame implements IMainView {
 		this.pack();
 	}
 
+	@Override
+	public void close() {
+		this.setVisible(false);
+	}
+
 }
