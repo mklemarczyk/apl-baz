@@ -27,7 +27,7 @@ public final class MainController implements IMainController {
 		this._view = view;
 		this._view.setController(this);
 		
-		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
+		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
 		
 		User p = new User();
 		p.set("login", "Marilyn");

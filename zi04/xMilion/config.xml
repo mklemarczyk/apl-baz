@@ -1,0 +1,6 @@
+<Configuration>
+	<Database>
+		<Driver>com.mysql.jdbc.Driver</Driver>
+		<Dns>jdbc:mysql://localhost/apl-baz-pr4</Dns>
+		<User>root</User>
+		<Password>usbw</Password></Database></Configuration>

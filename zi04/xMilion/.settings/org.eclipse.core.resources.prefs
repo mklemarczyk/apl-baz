@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/Domain/Config.java=UTF-8
 encoding//src/GUI/Views/EndGameView.java=UTF-8
 encoding//src/GUI/Views/GameView.java=UTF-8
 encoding//src/GUI/Views/HighscoreView.java=UTF-8

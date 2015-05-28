@@ -54,7 +54,7 @@ public final class GameController implements IGameController {
 		this.lastResult = true;
 		this.results = new ArrayList<ResultQuestion>();
 
-		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
+		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
 
 		Test test = new Test();
 		test.saveIt();
@@ -111,7 +111,7 @@ public final class GameController implements IGameController {
 			this.timer.cancel();
 		} else {
 			questionPos++;
-			Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
+			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
 			LazyList<Model> testItems = TestItem.find("test_id = ?", testId);
 			if (questionPos < testItems.size()) {
 				Model testItem = testItems.get(questionPos);
@@ -147,7 +147,7 @@ public final class GameController implements IGameController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
+			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
 			LazyList<Model> options = Option.find("question_id = ? AND content = ?", questionId,
 					arg0.getActionCommand());
 			if (options.size() > 0) {

@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="../libs/javalite_common-1_4_6/javalite-common.jar"/>
 	<classpathentry kind="lib" path="../libs/slf4j-1_7_12/slf4j-simple-1.7.12.jar"/>
 	<classpathentry kind="lib" path="../libs/activejdbc-1_4_6/activejdbc.jar"/>
+	<classpathentry kind="lib" path="../libs/xerces-2_11_0/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="../libs/xerces-2_11_0/xml-apis.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
