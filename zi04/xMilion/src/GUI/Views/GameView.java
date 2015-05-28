@@ -71,4 +71,9 @@ public final class GameView extends JPanel implements IGameView {
 		this.answer4.setText(ans4);
 	}
 
+	@Override
+	public void setTime(int time) {
+		this.timeLabel.setText(String.format("%d s", time));
+	}
+
 }

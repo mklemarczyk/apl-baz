@@ -3,11 +3,14 @@ package GUI.Controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 
+import Domain.Config;
 import Domain.Option;
 import Domain.Question;
 import Domain.ResultQuestion;
@@ -28,8 +31,12 @@ public final class GameController implements IGameController {
 	boolean lastResult;
 	ArrayList<ResultQuestion> results;
 
+	Timer timer;
+	int time;
+
 	public GameController(IGameView view) {
 		this._view = view;
+		this.timer = new Timer();
 	}
 
 	@Override
@@ -44,7 +51,7 @@ public final class GameController implements IGameController {
 
 	@Override
 	public void loadNewTest() {
-		this.lastResult = false;
+		this.lastResult = true;
 		this.results = new ArrayList<ResultQuestion>();
 
 		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
@@ -62,7 +69,9 @@ public final class GameController implements IGameController {
 
 		this.testId = test.getInteger("id");
 		this.questionPos = -1;
-		loadNextQuestion();
+		this.loadNextQuestion();
+
+		restartTimer();
 	}
 
 	@Override
@@ -75,9 +84,31 @@ public final class GameController implements IGameController {
 		return new AnswerAction();
 	}
 
+	private void restartTimer() {
+		this.time = 60;
+		_view.setTime(time);
+		if (this.timer != null) {
+			this.timer.cancel();
+		}
+		this.timer = new Timer();
+		this.timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				if (time > 1) {
+					time--;
+					_view.setTime(time);
+				} else {
+					lastResult = false;
+					loadNextQuestion();
+				}
+			}
+		}, 1000, 1000);
+	}
+
 	private void loadNextQuestion() {
-		if (this.results.size() > 0 && this.results.get(this.results.size() - 1).havePoint == false) {
+		if (lastResult == false) {
 			mainController.getView().setState(MainState.EndGameFailed);
+			this.timer.cancel();
 		} else {
 			questionPos++;
 			Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/apl-baz-pr4", "root", "usbw");
@@ -99,12 +130,14 @@ public final class GameController implements IGameController {
 			}
 			Base.close();
 		}
+		restartTimer();
 	}
 
 	class CancelAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			timer.cancel();
 			mainController.getView().setState(MainState.Menu);
 		}
 

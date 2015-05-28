@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import org.javalite.activejdbc.Base;
 
+import Domain.Config;
 import Domain.User;
 import GUI.Interface.IEndGameController;
 import GUI.Interface.IEndGameView;
