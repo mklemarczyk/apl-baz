@@ -3,7 +3,7 @@ package Domain;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("question")
-public class Question extends Model {
+@Table("test_item")
+public class TestItem extends Model {
 
 }
