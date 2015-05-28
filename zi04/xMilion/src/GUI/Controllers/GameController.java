@@ -2,7 +2,6 @@ package GUI.Controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,6 +10,7 @@ import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.Model;
 
 import Domain.Config;
+import Domain.Game;
 import Domain.Option;
 import Domain.Question;
 import Domain.ResultQuestion;
@@ -25,14 +25,8 @@ public final class GameController implements IGameController {
 	IGameView _view;
 	IMainController mainController;
 
-	int testId;
-	int questionId;
-	int questionPos;
-	boolean lastResult;
-	ArrayList<ResultQuestion> results;
-
+	Game game;
 	Timer timer;
-	int time;
 
 	public GameController(IGameView view) {
 		this._view = view;
@@ -48,12 +42,15 @@ public final class GameController implements IGameController {
 	public void setMainController(IMainController mainController) {
 		this.mainController = mainController;
 	}
+	
+	@Override
+	public void setGame(Game game) {
+		this.game = game;
+		loadNextQuestion();
+	}
 
 	@Override
 	public void loadNewTest() {
-		this.lastResult = true;
-		this.results = new ArrayList<ResultQuestion>();
-
 		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
 
 		Test test = new Test();
@@ -67,8 +64,7 @@ public final class GameController implements IGameController {
 		}
 		Base.close();
 
-		this.testId = test.getInteger("id");
-		this.questionPos = -1;
+		this.game = new Game(test.getInteger("id"));
 		this.loadNextQuestion();
 
 		restartTimer();
@@ -85,8 +81,8 @@ public final class GameController implements IGameController {
 	}
 
 	private void restartTimer() {
-		this.time = 60;
-		_view.setTime(time);
+		this.game.time = 60;
+		_view.setTime(this.game.time);
 		if (this.timer != null) {
 			this.timer.cancel();
 		}
@@ -94,11 +90,11 @@ public final class GameController implements IGameController {
 		this.timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				if (time > 1) {
-					time--;
-					_view.setTime(time);
+				if (game.time > 1) {
+					game.time--;
+					_view.setTime(game.time);
 				} else {
-					lastResult = false;
+					game.lastResult = false;
 					loadNextQuestion();
 				}
 			}
@@ -106,17 +102,17 @@ public final class GameController implements IGameController {
 	}
 
 	private void loadNextQuestion() {
-		if (lastResult == false) {
+		if (game.lastResult == false) {
 			mainController.getView().setState(MainState.EndGameFailed);
 			this.timer.cancel();
 		} else {
-			questionPos++;
+			game.currentQuestionPos++;
 			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-			LazyList<Model> testItems = TestItem.find("test_id = ?", testId);
-			if (questionPos < testItems.size()) {
-				Model testItem = testItems.get(questionPos);
+			LazyList<Model> testItems = TestItem.find("test_id = ?", game.testId);
+			if (game.currentQuestionPos < testItems.size()) {
+				Model testItem = testItems.get(game.currentQuestionPos);
 				int questionId = testItem.getInteger("question_id");
-				this.questionId = questionId;
+				this.game.currentQuestionId = questionId;
 
 				Model question = Question.findById(questionId);
 				this._view.setQuestion(question.getString("content"));
@@ -137,6 +133,7 @@ public final class GameController implements IGameController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			game.saveState();
 			timer.cancel();
 			mainController.getView().setState(MainState.Menu);
 		}
@@ -148,17 +145,16 @@ public final class GameController implements IGameController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-			LazyList<Model> options = Option.find("question_id = ? AND content = ?", questionId,
+			LazyList<Model> options = Option.find("question_id = ? AND content = ?", game.currentQuestionId,
 					arg0.getActionCommand());
 			if (options.size() > 0) {
 				Model option = options.get(0);
 				ResultQuestion rq = new ResultQuestion();
-				rq.testId = testId;
-				rq.questionId = questionId;
-				rq.questionPos = questionPos;
+				rq.testId = game.testId;
+				rq.questionId = game.currentQuestionId;
+				rq.questionPos = game.currentQuestionPos;
 				rq.havePoint = option.getBoolean("is_correct");
-				results.add(rq);
-				System.out.println(results);
+				game.results.add(rq);
 			}
 			Base.close();
 			loadNextQuestion();

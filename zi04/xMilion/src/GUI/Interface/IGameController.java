@@ -2,6 +2,8 @@ package GUI.Interface;
 
 import java.awt.event.ActionListener;
 
+import Domain.Game;
+
 public interface IGameController {
 
 	IGameView getView();
@@ -13,5 +15,7 @@ public interface IGameController {
 	void loadNewTest();
 
 	ActionListener getAnswerEvent();
+
+	void setGame(Game game);
 
 }

@@ -3,6 +3,7 @@ package GUI.Controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Domain.Game;
 import GUI.Interface.IMainController;
 import GUI.Interface.IMenuController;
 import GUI.Interface.IMenuView;
@@ -59,16 +60,23 @@ public class MenuController implements IMenuController {
 		}
 
 	}
-	
+
 	class ResumeGameAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			mainController.getView().setState(IMainController.MainState.Game);
+			Game game = new Game(0);
+			game = game.readState();
+			if (game != null) {
+				mainController.getGameController().setGame(game);
+			} else {
+				mainController.getGameController().loadNewTest();
+			}
 		}
 
 	}
-	
+
 	class HighscoreAction implements ActionListener {
 
 		@Override
@@ -77,7 +85,7 @@ public class MenuController implements IMenuController {
 		}
 
 	}
-	
+
 	class SettingsAction implements ActionListener {
 
 		@Override
@@ -86,7 +94,7 @@ public class MenuController implements IMenuController {
 		}
 
 	}
-	
+
 	class CloseAction implements ActionListener {
 
 		@Override
