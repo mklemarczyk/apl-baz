@@ -85,7 +85,7 @@ public class Config {
 				// set validation feature
 				config.setParameter("validate", Boolean.FALSE);
 
-				System.out.println("Parsowanie config.xml ...");
+				System.out.println("Loading config.xml ...");
 				// sparsowanie dokumentu i pozyskanie "document" do dalszej
 				// pracy
 				document = builder.parseURI("config.xml");

@@ -88,7 +88,7 @@ public class Game {
 				// set validation feature
 				config.setParameter("validate", Boolean.FALSE);
 
-				System.out.println("Parsowanie " + fileName + "...");
+				System.out.println("Loading " + fileName + "...");
 				// sparsowanie dokumentu i pozyskanie "document" do dalszej
 				// pracy
 				Document document = builder.parseURI(fileName);
@@ -96,7 +96,7 @@ public class Game {
 				// praca z dokumentem, modyfikacja zawartosci etc... np.
 				// tutaj dodanie nowego pracownika poprzez skopiowanie innego
 				Element elem = document.getDocumentElement();// .getRoot();.getElementById("two.worker");
-				
+
 				NamedNodeMap rootAttrs = elem.getAttributes();
 				for (int i = 0, c = rootAttrs.getLength(); i < c; i++) {
 					Node rootAttr = rootAttrs.item(i);
@@ -105,7 +105,7 @@ public class Game {
 						game = new Game(testId);
 					}
 				}
-				
+
 				NodeList rootChilds = elem.getChildNodes();
 				for (int i = 0, c = rootChilds.getLength(); i < c; i++) {
 					Node rootAttr = rootChilds.item(i);
@@ -118,19 +118,18 @@ public class Game {
 							if (qrAttr.getNodeName() == "id") {
 								int questionId = Integer.parseInt(qrAttr.getTextContent());
 								result.questionId = questionId;
-							}else if (qrAttr.getNodeName() == "position") {
+							} else if (qrAttr.getNodeName() == "position") {
 								int questionPos = Integer.parseInt(qrAttr.getTextContent());
 								result.questionPos = questionPos;
-							}else if (qrAttr.getNodeName() == "result") {
+							} else if (qrAttr.getNodeName() == "result") {
 								boolean havePoint = Boolean.parseBoolean(qrAttr.getTextContent());
 								result.havePoint = havePoint;
 							}
 						}
-						
+
 						game.results.add(result);
 					}
 				}
-				
 
 				return game;
 			} catch (Exception ex) {
@@ -186,7 +185,7 @@ public class Game {
 				StreamResult result = new StreamResult(new File(fileName));
 				transformer.transform(source, result);
 
-				System.out.println("Done");
+				System.out.println("Saving " + fileName + " ...");
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
