@@ -5,5 +5,7 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("score")
 public class Score extends Model {
-
+	static{
+		validatePresenceOf("value", "user_id", "test_id");
+	}
 }

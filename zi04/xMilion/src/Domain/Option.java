@@ -5,5 +5,11 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("options")
 public class Option extends Model {
-
+	static{
+		validatePresenceOf("content", "is_correct", "question_id");
+	}
+	
+	public String getContent() {
+		return this.getString("content");
+	}
 }
