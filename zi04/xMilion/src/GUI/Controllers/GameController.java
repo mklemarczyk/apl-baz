@@ -7,7 +7,6 @@ import java.util.TimerTask;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
-import org.javalite.activejdbc.Model;
 
 import Domain.Config;
 import Domain.Game;
@@ -55,11 +54,11 @@ public final class GameController implements IGameController {
 
 		Test test = new Test();
 		test.saveIt();
-		LazyList<Model> questions = Question.findAll();
-		for (Model question : questions) {
+		LazyList<Question> questions = Question.findAll();
+		for (Question question : questions) {
 			TestItem testItem = new TestItem();
-			testItem.set("test_id", test.get("id"));
-			testItem.set("question_id", question.get("id"));
+			testItem.setTest(test);
+			testItem.setQuestion(question);
 			testItem.saveIt();
 		}
 		Base.close();
@@ -108,18 +107,18 @@ public final class GameController implements IGameController {
 		} else {
 			game.currentQuestionPos++;
 			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-			LazyList<Model> testItems = TestItem.find("test_id = ?", game.testId);
+			LazyList<TestItem> testItems = TestItem.find("test_id = ?", game.testId);
 			if (game.currentQuestionPos < testItems.size()) {
-				Model testItem = testItems.get(game.currentQuestionPos);
-				int questionId = testItem.getInteger("question_id");
+				TestItem testItem = testItems.get(game.currentQuestionPos);
+				int questionId = testItem.getQuestionId();
 				this.game.currentQuestionId = questionId;
 
-				Model question = Question.findById(questionId);
-				this._view.setQuestion(question.getString("content"));
+				Question question = Question.findById(questionId);
+				this._view.setQuestion(question.getContent());
 
 				LazyList<Option> options = Option.where("question_id = ?", questionId);
-				this._view.setOptions(options.get(0).getString("content"), options.get(1).getString("content"), options
-						.get(2).getString("content"), options.get(3).getString("content"));
+				this._view.setOptions(options.get(0).getContent(), options.get(1).getContent(), options
+						.get(2).getContent(), options.get(3).getContent());
 
 			} else {
 				mainController.getView().setState(MainState.EndGameSuccess);
@@ -145,10 +144,10 @@ public final class GameController implements IGameController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-			LazyList<Model> options = Option.find("question_id = ? AND content = ?", game.currentQuestionId,
+			LazyList<Option> options = Option.find("question_id = ? AND content = ?", game.currentQuestionId,
 					arg0.getActionCommand());
 			if (options.size() > 0) {
-				Model option = options.get(0);
+				Option option = options.get(0);
 				ResultQuestion rq = new ResultQuestion();
 				rq.testId = game.testId;
 				rq.questionId = game.currentQuestionId;
