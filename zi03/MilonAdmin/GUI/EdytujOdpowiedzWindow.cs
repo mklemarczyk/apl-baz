@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace MilonAdmin.GUI {
 	public partial class EdytujOdpowiedzWindow : Form {
-		private MilionerzyDataSet.OptionRow _odpowiedz;
+		private MilionerzyDataSet.OptionsRow _odpowiedz;
 
 		public EdytujOdpowiedzWindow( ) {
 			InitializeComponent( );
 
-			var questions = new MilionerzyDataSet.QuestionDataTable( );
+			var questions = new MilionerzyDataSet.QuestionsDataTable( );
 			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(questions);
 
 			this.comboBoxPytanie.DataSource = questions;
@@ -24,9 +24,9 @@ namespace MilonAdmin.GUI {
         }
 
 		private void buttonOk_Click(object sender, EventArgs e) {
-			var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionRow>(this.comboBoxPytanie.SelectedItem);
+			var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionsRow>(this.comboBoxPytanie.SelectedItem);
 			if (pytanie != null) {
-				_odpowiedz.QuestionId = pytanie.Id;
+				_odpowiedz.Question_Id = pytanie.Id;
 			}
 			_odpowiedz.Content = this.textBoxOdpowiedz.Text;
 			if (this._odpowiedz.isValid( )) {
@@ -39,9 +39,9 @@ namespace MilonAdmin.GUI {
 			this.Close( );
 		}
 
-		public void ShowDialog(MilionerzyDataSet.OptionRow odpowiedz) {
+		public void ShowDialog(MilionerzyDataSet.OptionsRow odpowiedz) {
 			this._odpowiedz = odpowiedz;
-			this.comboBoxPytanie.SelectedValue = this._odpowiedz.QuestionId;
+			this.comboBoxPytanie.SelectedValue = this._odpowiedz.Question_Id;
 			this.textBoxOdpowiedz.Text = this._odpowiedz.Content;
 			ShowDialog( );
 		}

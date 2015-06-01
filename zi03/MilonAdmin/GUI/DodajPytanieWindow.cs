@@ -14,9 +14,9 @@ namespace MilonAdmin.GUI {
 
 		private void buttonOk_Click(object sender, EventArgs e) {
 			var dataSet = new MilionerzyDataSet( );
-			var pytanie = dataSet.Question.NewQuestionRow( );
+			var pytanie = dataSet.Questions.NewQuestionsRow( );
 			pytanie.Content = this.textBoxPytanie.Text;
-			dataSet.Question.AddQuestionRow(pytanie);
+			dataSet.Questions.AddQuestionsRow(pytanie);
 			if (pytanie.isValid( )) {
 				Data.DataProxyDispather.Instance.DataProxy.InsertQuestion(pytanie);
 				this.Close( );

@@ -13,7 +13,7 @@ namespace MilonAdmin.GUI {
 		public DodajOdpowiedzWindow( ) {
 			InitializeComponent( );
 
-			var questions = new MilionerzyDataSet.QuestionDataTable( );
+			var questions = new MilionerzyDataSet.QuestionsDataTable( );
 			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(questions);
 
 			this.comboBoxPytanie.DataSource = questions;
@@ -22,13 +22,13 @@ namespace MilonAdmin.GUI {
 
 		private void buttonOk_Click(object sender, EventArgs e) {
 			var dataSet = new MilionerzyDataSet( );
-			var odpowiedz = dataSet.Option.NewOptionRow( );
-			var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionRow>(this.comboBoxPytanie.SelectedItem);
+			var odpowiedz = dataSet.Options.NewOptionsRow( );
+			var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionsRow>(this.comboBoxPytanie.SelectedItem);
 			if (pytanie != null) {
-				odpowiedz.QuestionId = pytanie.Id;
+				odpowiedz.Question_Id = pytanie.Id;
 			}
 			odpowiedz.Content = this.textBoxOdpowiedz.Text;
-			dataSet.Option.AddOptionRow(odpowiedz);
+			dataSet.Options.AddOptionsRow(odpowiedz);
 			if (odpowiedz.isValid( )) {
 				Data.DataProxyDispather.Instance.DataProxy.InsertOption(odpowiedz);
 				this.Close( );

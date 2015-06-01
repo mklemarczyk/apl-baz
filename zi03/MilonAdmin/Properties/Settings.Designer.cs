@@ -26,10 +26,10 @@ namespace MilonAdmin.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=MSI-NOTEBOOKS\\SQLE1;Initial Catalog=apli1;Integrated Security=True")]
-        public string apli1ConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=apl-baz-pr3;Integrated Security=True")]
+        public string apl_baz_pr3ConnectionString {
             get {
-                return ((string)(this["apli1ConnectionString"]));
+                return ((string)(this["apl_baz_pr3ConnectionString"]));
             }
         }
     }

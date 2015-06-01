@@ -15,13 +15,13 @@ namespace MilonAdmin.GUI {
 
 		private void buttonOk_Click(object sender, EventArgs e) {
 			var dataSet = new MilionerzyDataSet( );
-			var uzytkownik = dataSet.User.NewUserRow( );
+			var uzytkownik = dataSet.Users.NewUsersRow( );
 			uzytkownik.Login = this.textBoxLogin.Text;
 			uzytkownik.Password = this.maskedTextBoxHaslo.Text;
 			uzytkownik.Email = this.textBoxEmail.Text;
 			uzytkownik.Birthdate = this.dateTimePickerDataUrodzenia.Value.Date;
-			uzytkownik.IsPlayer = this.checkBoxAktywnosc.Checked;
-			dataSet.User.AddUserRow(uzytkownik);
+			uzytkownik.Is_Player = this.checkBoxAktywnosc.Checked;
+			dataSet.Users.AddUsersRow(uzytkownik);
 			if (uzytkownik.isValid( )) {
 				Data.DataProxyDispather.Instance.DataProxy.InsertUser(uzytkownik);
 				this.Close( );

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace MilonAdmin {
 	public static class UserExternalValidator {
-		public static bool isValid(this MilionerzyDataSet.UserRow user) {
+		public static bool isValid(this MilionerzyDataSet.UsersRow user) {
 			if (string.IsNullOrEmpty(user.Login)) {
 				MessageBox.Show("Login jest wymagany!");
 				return false;

@@ -26,7 +26,7 @@ namespace MilonAdmin.GUI {
 
 		private void buttonUzytkownikEdytuj_Click(object sender, EventArgs e) {
 			if (this.dataGridViewUzytkownicy.SelectedRows.Count > 0) {
-				var uzytkownik = DataFinder.DiscoverData<MilionerzyDataSet.UserRow>(this.dataGridViewUzytkownicy.SelectedRows[0]);
+				var uzytkownik = DataFinder.DiscoverData<MilionerzyDataSet.UsersRow>(this.dataGridViewUzytkownicy.SelectedRows[0]);
 				if (uzytkownik != null) {
 					EdytujUzytkownikaWindow okno = new EdytujUzytkownikaWindow( );
 					okno.ShowDialog(uzytkownik);
@@ -39,7 +39,7 @@ namespace MilonAdmin.GUI {
 			if (this.dataGridViewUzytkownicy.SelectedRows.Count > 0) {
 				if (MessageBox.Show("Czy na pewno chcesz uzunac?", "Uwaga", MessageBoxButtons.OKCancel) == DialogResult.OK) {
 					foreach (DataGridViewRow row in this.dataGridViewUzytkownicy.SelectedRows) {
-						var user = DataFinder.DiscoverData<MilionerzyDataSet.UserRow>(row);
+						var user = DataFinder.DiscoverData<MilionerzyDataSet.UsersRow>(row);
 						if (user != null) {
 							Data.DataProxyDispather.Instance.DataProxy.DeleteUser(user);
 							RefreshUzytkownicy( );
@@ -54,12 +54,12 @@ namespace MilonAdmin.GUI {
 		}
 
 		private void RefreshUzytkownicy( ) {
-			Data.DataProxyDispather.Instance.DataProxy.FillUsers(this.milionerzyDataSet.User);
+			Data.DataProxyDispather.Instance.DataProxy.FillUsers(this.milionerzyDataSet.Users);
 		}
 
 		private void buttonDodajObrazek_Click(object sender, EventArgs e) {
 			if (this.dataGridViewUzytkownicy.SelectedRows.Count > 0) {
-				var uzytkownik = DataFinder.DiscoverData<MilionerzyDataSet.UserRow>(this.dataGridViewUzytkownicy.SelectedRows[0]);
+				var uzytkownik = DataFinder.DiscoverData<MilionerzyDataSet.UsersRow>(this.dataGridViewUzytkownicy.SelectedRows[0]);
 				if (uzytkownik != null) {
 					if (openFileDialogObrazek.ShowDialog( ) == DialogResult.OK) {
 						if (openFileDialogObrazek.CheckFileExists) {
@@ -89,7 +89,7 @@ namespace MilonAdmin.GUI {
 
 		private void buttonPytanieEdytuj_Click(object sender, EventArgs e) {
 			if (this.dataGridViewPytania.SelectedRows.Count > 0) {
-				var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionRow>(this.dataGridViewPytania.SelectedRows[0]);
+				var pytanie = DataFinder.DiscoverData<MilionerzyDataSet.QuestionsRow>(this.dataGridViewPytania.SelectedRows[0]);
 				if (pytanie != null) {
 					EdytujPytanieWindow okno = new EdytujPytanieWindow( );
 					okno.ShowDialog(pytanie);
@@ -102,7 +102,7 @@ namespace MilonAdmin.GUI {
 			if (this.dataGridViewPytania.SelectedRows.Count > 0) {
 				if (MessageBox.Show("Czy na pewno chcesz usunac?", "Uwaga", MessageBoxButtons.OKCancel) == DialogResult.OK) {
 					foreach (DataGridViewRow row in this.dataGridViewPytania.SelectedRows) {
-						var question = DataFinder.DiscoverData<MilionerzyDataSet.QuestionRow>(row);
+						var question = DataFinder.DiscoverData<MilionerzyDataSet.QuestionsRow>(row);
 						if (question != null) {
 							Data.DataProxyDispather.Instance.DataProxy.DeleteQuestion(question);
 							RefreshPytania( );
@@ -117,7 +117,7 @@ namespace MilonAdmin.GUI {
 		}
 
 		private void RefreshPytania( ) {
-			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(this.milionerzyDataSet.Question);
+			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(this.milionerzyDataSet.Questions);
 		}
 		#endregion
 
@@ -130,7 +130,7 @@ namespace MilonAdmin.GUI {
 
 		private void buttonOdpowiedzEdytuj_Click(object sender, EventArgs e) {
 			if (this.dataGridViewOdpowiedzi.SelectedRows.Count > 0) {
-				var option = DataFinder.DiscoverData<MilionerzyDataSet.OptionRow>(this.dataGridViewOdpowiedzi.SelectedRows[0]);
+				var option = DataFinder.DiscoverData<MilionerzyDataSet.OptionsRow>(this.dataGridViewOdpowiedzi.SelectedRows[0]);
 				if (option != null) {
 					EdytujOdpowiedzWindow okno = new EdytujOdpowiedzWindow( );
 					okno.ShowDialog(option);
@@ -143,7 +143,7 @@ namespace MilonAdmin.GUI {
 			if (this.dataGridViewOdpowiedzi.SelectedRows.Count > 0) {
 				if (MessageBox.Show("Czy na pewno chcesz usunac?", "Uwaga", MessageBoxButtons.OKCancel) == DialogResult.OK) {
 					foreach (DataGridViewRow row in this.dataGridViewOdpowiedzi.SelectedRows) {
-						var option = DataFinder.DiscoverData<MilionerzyDataSet.OptionRow>(row);
+						var option = DataFinder.DiscoverData<MilionerzyDataSet.OptionsRow>(row);
 						if (option != null) {
 							Data.DataProxyDispather.Instance.DataProxy.DeleteOption(option);
 							RefreshOdpowiedzi( );
@@ -158,7 +158,7 @@ namespace MilonAdmin.GUI {
 		}
 
 		private void RefreshOdpowiedzi( ) {
-			Data.DataProxyDispather.Instance.DataProxy.FillOptions(this.milionerzyDataSet.Option);
+			Data.DataProxyDispather.Instance.DataProxy.FillOptions(this.milionerzyDataSet.Options);
 		}
 		#endregion
 
@@ -167,9 +167,9 @@ namespace MilonAdmin.GUI {
 		}
 
 		private void MainWindow_Load(object sender, EventArgs e) {
-			Data.DataProxyDispather.Instance.DataProxy.FillOptions(this.milionerzyDataSet.Option);
-			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(this.milionerzyDataSet.Question);
-			Data.DataProxyDispather.Instance.DataProxy.FillUsers(this.milionerzyDataSet.User);
+			Data.DataProxyDispather.Instance.DataProxy.FillOptions(this.milionerzyDataSet.Options);
+			Data.DataProxyDispather.Instance.DataProxy.FillQuestions(this.milionerzyDataSet.Questions);
+			Data.DataProxyDispather.Instance.DataProxy.FillUsers(this.milionerzyDataSet.Users);
 		}
 
 		private void buttonSave_Click(object sender, EventArgs e) {

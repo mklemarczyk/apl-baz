@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace MilonAdmin {
 	public static class QuestionExternalValidator {
-		public static bool isValid(this MilionerzyDataSet.QuestionRow question) {
+		public static bool isValid(this MilionerzyDataSet.QuestionsRow question) {
 			if (string.IsNullOrEmpty(question.Content)) {
 				MessageBox.Show("Treść pytania jest wymagana!");
 				return false;

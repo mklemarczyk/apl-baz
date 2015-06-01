@@ -4,28 +4,28 @@ using System.Text;
 
 namespace MilonAdmin.Data {
 	public interface IDataProxy {
-		void FillOptions(MilionerzyDataSet.OptionDataTable table);
+		void FillOptions(MilionerzyDataSet.OptionsDataTable table);
 
-		void InsertOption(MilionerzyDataSet.OptionRow option);
+		void InsertOption(MilionerzyDataSet.OptionsRow option);
 
-		void UpdateOption(MilionerzyDataSet.OptionRow option);
+		void UpdateOption(MilionerzyDataSet.OptionsRow option);
 
-		void DeleteOption(MilionerzyDataSet.OptionRow option);
+		void DeleteOption(MilionerzyDataSet.OptionsRow option);
 
-		void FillQuestions(MilionerzyDataSet.QuestionDataTable table);
+		void FillQuestions(MilionerzyDataSet.QuestionsDataTable table);
 
-		void InsertQuestion(MilionerzyDataSet.QuestionRow question);
+		void InsertQuestion(MilionerzyDataSet.QuestionsRow question);
 
-		void UpdateQuestion(MilionerzyDataSet.QuestionRow question);
+		void UpdateQuestion(MilionerzyDataSet.QuestionsRow question);
 
-		void DeleteQuestion(MilionerzyDataSet.QuestionRow question);
+		void DeleteQuestion(MilionerzyDataSet.QuestionsRow question);
 
-		void FillUsers(MilionerzyDataSet.UserDataTable table);
+		void FillUsers(MilionerzyDataSet.UsersDataTable table);
 
-		void InsertUser(MilionerzyDataSet.UserRow user);
+		void InsertUser(MilionerzyDataSet.UsersRow user);
 
-		void UpdateUser(MilionerzyDataSet.UserRow user);
+		void UpdateUser(MilionerzyDataSet.UsersRow user);
 
-		void DeleteUser(MilionerzyDataSet.UserRow user);
+		void DeleteUser(MilionerzyDataSet.UsersRow user);
 	}
 }

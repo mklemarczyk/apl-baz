@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MilonAdmin.GUI {
 	public partial class EdytujPytanieWindow : Form {
-		private MilionerzyDataSet.QuestionRow _pytanie;
+		private MilionerzyDataSet.QuestionsRow _pytanie;
 
 		public EdytujPytanieWindow( ) {
 			InitializeComponent( );
@@ -26,7 +26,7 @@ namespace MilonAdmin.GUI {
 			this.Close( );
 		}
 
-		public void ShowDialog(MilionerzyDataSet.QuestionRow pytanie) {
+		public void ShowDialog(MilionerzyDataSet.QuestionsRow pytanie) {
 			this._pytanie = pytanie;
 			this.textBoxPytanie.Text = this._pytanie.Content;
 			ShowDialog( );

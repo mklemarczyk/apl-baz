@@ -6,13 +6,13 @@ using System.Windows.Forms;
 
 namespace MilonAdmin {
 	public static class OptionExternalValidator {
-		public static bool isValid(this MilionerzyDataSet.OptionRow option) {
+		public static bool isValid(this MilionerzyDataSet.OptionsRow option) {
 			if (string.IsNullOrEmpty(option.Content)) {
 				MessageBox.Show("Treść jest wymagana!");
 				return false;
 			}
 			try {
-				if (option.QuestionRow == null && option.QuestionId <= 0) {
+				if (option.QuestionsRow == null && option.Question_Id <= 0) {
 					MessageBox.Show("Pytanie jest wymagane!");
 					return false;
 				}

@@ -523,7 +523,7 @@
 			// 
 			// userBindingSource
 			// 
-			this.userBindingSource.DataMember = "User";
+			this.userBindingSource.DataMember = "Users";
 			this.userBindingSource.DataSource = this.milionerzyDataSet;
 			// 
 			// milionerzyDataSet
@@ -540,7 +540,7 @@
 			// 
 			// questionBindingSource
 			// 
-			this.questionBindingSource.DataMember = "Question";
+			this.questionBindingSource.DataMember = "Questions";
 			this.questionBindingSource.DataSource = this.milionerzyDataSet;
 			// 
 			// dataGridViewTextBoxColumn1
@@ -552,7 +552,7 @@
 			// 
 			// optionBindingSource
 			// 
-			this.optionBindingSource.DataMember = "Option";
+			this.optionBindingSource.DataMember = "Options";
 			this.optionBindingSource.DataSource = this.milionerzyDataSet;
 			// 
 			// buttonDodajObrazek
