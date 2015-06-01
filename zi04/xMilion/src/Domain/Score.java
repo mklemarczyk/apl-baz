@@ -8,4 +8,12 @@ public class Score extends Model {
 	static{
 		validatePresenceOf("value", "user_id", "test_id");
 	}
+	
+	public int getValue(){
+		return this.getInteger("value");
+	}
+	
+	public User getUser(){
+		return this.parent(User.class);
+	}
 }
