@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,7 +42,7 @@ public final class GameController implements IGameController {
 	public void setMainController(IMainController mainController) {
 		this.mainController = mainController;
 	}
-	
+
 	@Override
 	public void setGame(Game game) {
 		this.game = game;
@@ -50,23 +51,33 @@ public final class GameController implements IGameController {
 
 	@Override
 	public void loadNewTest() {
-		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
+		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
+				Config.getInstance().getPassword());
 
-		Test test = new Test();
-		test.saveIt();
 		LazyList<Question> questions = Question.findAll();
-		for (Question question : questions) {
-			TestItem testItem = new TestItem();
-			testItem.setTest(test);
-			testItem.setQuestion(question);
-			testItem.saveIt();
+		int range = questions.size();
+
+		if (range > 0) {
+			Test test = new Test();
+			test.setUserId(1);
+			test.saveIt();
+
+			Random rand = new Random();
+
+			for (int i = 0; i < Game.qustionsCount; i++) {
+				int randInt = rand.nextInt(range);
+				Question question = questions.get(randInt);
+				TestItem testItem = new TestItem();
+				testItem.setTest(test);
+				testItem.setQuestion(question);
+				testItem.saveIt();
+			}
+
+			this.game = new Game(test.getInteger("id"));
 		}
 		Base.close();
 
-		this.game = new Game(test.getInteger("id"));
 		this.loadNextQuestion();
-
-		restartTimer();
 	}
 
 	@Override
@@ -101,39 +112,46 @@ public final class GameController implements IGameController {
 	}
 
 	private void loadNextQuestion() {
-		if (game.lastResult == false) {
-			mainController.getView().setState(MainState.EndGameFailed);
-			this.timer.cancel();
-		} else {
-			game.currentQuestionPos++;
-			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-			LazyList<TestItem> testItems = TestItem.find("test_id = ?", game.testId);
-			if (game.currentQuestionPos < testItems.size()) {
-				TestItem testItem = testItems.get(game.currentQuestionPos);
-				int questionId = testItem.getQuestionId();
-				this.game.currentQuestionId = questionId;
-
-				Question question = Question.findById(questionId);
-				this._view.setQuestion(question.getContent());
-
-				LazyList<Option> options = Option.where("question_id = ?", questionId);
-				this._view.setOptions(options.get(0).getContent(), options.get(1).getContent(), options
-						.get(2).getContent(), options.get(3).getContent());
-
+		if (game != null) {
+			if (game.lastResult == false) {
+				mainController.getView().setState(MainState.EndGameFailed);
+				this.timer.cancel();
 			} else {
-				mainController.getView().setState(MainState.EndGameSuccess);
+				game.currentQuestionPos++;
+				Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance()
+						.getUser(), Config.getInstance().getPassword());
+				LazyList<TestItem> testItems = TestItem.find("test_id = ?", game.testId);
+				if (game.currentQuestionPos < testItems.size()) {
+					TestItem testItem = testItems.get(game.currentQuestionPos);
+					int questionId = testItem.getQuestionId();
+					this.game.currentQuestionId = questionId;
+
+					Question question = Question.findById(questionId);
+					this._view.setQuestion(question.getContent());
+
+					LazyList<Option> options = Option.where("question_id = ?", questionId);
+					this._view.setOptions(options.get(0).getContent(), options.get(1).getContent(), options.get(2)
+							.getContent(), options.get(3).getContent());
+
+				} else {
+					mainController.getView().setState(MainState.EndGameSuccess);
+				}
+				Base.close();
 			}
-			Base.close();
+			restartTimer();
 		}
-		restartTimer();
 	}
 
 	class CancelAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			game.saveState();
-			timer.cancel();
+			if (game != null) {
+				game.saveState();
+			}
+			if (timer != null) {
+				timer.cancel();
+			}
 			mainController.getView().setState(MainState.Menu);
 		}
 
@@ -143,7 +161,8 @@ public final class GameController implements IGameController {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
+			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
+					Config.getInstance().getPassword());
 			LazyList<Option> options = Option.find("question_id = ? AND content = ?", game.currentQuestionId,
 					arg0.getActionCommand());
 			if (options.size() > 0) {

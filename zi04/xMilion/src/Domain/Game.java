@@ -30,6 +30,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class Game {
+	public final static int qustionsCount;
+	static {
+		qustionsCount = 15;
+	}
+	
 	public final int testId;
 	public int currentQuestionPos;
 	public final ArrayList<ResultQuestion> results;
