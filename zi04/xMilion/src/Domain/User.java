@@ -3,7 +3,7 @@ package Domain;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("user")
+@Table("users")
 public class User extends Model {
 	static{
 		validatePresenceOf("login", "password", "email", "birthdate", "is_player");

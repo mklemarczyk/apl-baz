@@ -3,7 +3,7 @@ package Domain;
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;
 
-@Table("question")
+@Table("questions")
 public class Question extends Model {
 	static{
 		validatePresenceOf("content");

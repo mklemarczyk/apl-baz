@@ -23,8 +23,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `question_id` int(11) NOT NULL,
   `is_correct` bit(1) NOT NULL,
+  `question_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `question_id` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `options` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `question`
+-- Table structure for table `questions`
 --
 
-CREATE TABLE IF NOT EXISTS `question` (
+CREATE TABLE IF NOT EXISTS `questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `question` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `score`
+-- Table structure for table `scores`
 --
 
-CREATE TABLE IF NOT EXISTS `score` (
+CREATE TABLE IF NOT EXISTS `scores` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -60,21 +60,22 @@ CREATE TABLE IF NOT EXISTS `score` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test`
+-- Table structure for table `tests`
 --
 
-CREATE TABLE IF NOT EXISTS `test` (
+CREATE TABLE IF NOT EXISTS `tests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `test_item`
+-- Table structure for table `test_items`
 --
 
-CREATE TABLE IF NOT EXISTS `test_item` (
+CREATE TABLE IF NOT EXISTS `test_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `test_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
@@ -86,10 +87,10 @@ CREATE TABLE IF NOT EXISTS `test_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -105,21 +106,27 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 --
--- Constraints for table `option`
+-- Constraints for table `tests`
 --
-ALTER TABLE `option`
-  ADD CONSTRAINT `option_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `test`
+  ADD CONSTRAINT `test_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `score`
+-- Constraints for table `options`
 --
-ALTER TABLE `score`
-  ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `test` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `options`
+  ADD CONSTRAINT `option_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `test_item`
+-- Constraints for table `scores`
 --
-ALTER TABLE `test_item`
-  ADD CONSTRAINT `test_item_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `test` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `test_item_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `scores`
+  ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `test_items`
+--
+ALTER TABLE `test_items`
+  ADD CONSTRAINT `test_item_ibfk_1` FOREIGN KEY (`test_id`) REFERENCES `tests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `test_item_ibfk_2` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
