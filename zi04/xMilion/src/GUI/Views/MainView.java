@@ -38,6 +38,19 @@ public final class MainView extends JFrame implements IMainView {
 		this.controller.setGameController(this.gameView);
 		this.controller.setHighscoreController(this.highscoreView);
 		this.controller.setEndGameController(this.endGameView);
+		
+		this.setState(MainState.Menu);
+		
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // Determine the new location of the window
+        int w = this.getSize().width;
+        int h = this.getSize().height;
+        int x = (dim.width-w)/2;
+        int y = (dim.height-h)/2;
+
+        // Move the window
+        this.setLocation(x, y);
 	}
 
 	@Override
@@ -90,17 +103,6 @@ public final class MainView extends JFrame implements IMainView {
 		this.state = state;
 		this.pack();
 		this.setSize(500,500);
-		
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Determine the new location of the window
-        int w = this.getSize().width;
-        int h = this.getSize().height;
-        int x = (dim.width-w)/2;
-        int y = (dim.height-h)/2;
-
-        // Move the window
-        this.setLocation(x, y);
 	}
 
 	@Override

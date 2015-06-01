@@ -38,9 +38,6 @@ public final class MainController implements IMainController {
 		p.saveIt();
 		
 		Base.close();
-		
-		this._view.setState(MainState.Menu);
-		
 	}
 
 	@Override
