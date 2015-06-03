@@ -16,22 +16,22 @@ public final class MenuView extends JPanel implements IMenuView {
 	private JButton newGameButton;
 	private JButton resumeGameButton;
 	private JButton highscoreButton;
-	private JButton settingsButton;
+	//private JButton settingsButton;
 	private JButton closeButton;
 
 	public MenuView() {
-		this.setLayout(new GridLayout(5, 0));
+		this.setLayout(new GridLayout(4, 0));
 
 		this.newGameButton = new JButton("Nowa gra");
 		this.resumeGameButton = new JButton("Wznów grę");
 		this.highscoreButton = new JButton("Wyniki");
-		this.settingsButton = new JButton("Ustawienia");
+		//this.settingsButton = new JButton("Ustawienia");
 		this.closeButton = new JButton("Close");
 
 		this.add(this.newGameButton);
 		this.add(this.resumeGameButton);
 		this.add(this.highscoreButton);
-		this.add(this.settingsButton);
+		//this.add(this.settingsButton);
 		this.add(this.closeButton);
 	}
 
@@ -42,7 +42,7 @@ public final class MenuView extends JPanel implements IMenuView {
 		this.newGameButton.addActionListener(this.controller.getNewGameEvent());
 		this.resumeGameButton.addActionListener(this.controller.getResumeGameEvent());
 		this.highscoreButton.addActionListener(this.controller.getHighscoreEvent());
-		this.settingsButton.addActionListener(this.controller.getSettingsEvent());
+		//this.settingsButton.addActionListener(this.controller.getSettingsEvent());
 		this.closeButton.addActionListener(this.controller.getCloseEvent());
 	}
 

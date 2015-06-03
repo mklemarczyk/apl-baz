@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,8 +15,10 @@ import Domain.Game;
 import Domain.Option;
 import Domain.Question;
 import Domain.ResultQuestion;
+import Domain.Score;
 import Domain.Test;
 import Domain.TestItem;
+import Domain.User;
 import GUI.Interface.IGameController;
 import GUI.Interface.IGameView;
 import GUI.Interface.IMainController;
@@ -73,7 +76,11 @@ public final class GameController implements IGameController {
 				testItem.saveIt();
 			}
 
-			this.game = new Game(test.getInteger("id"));
+			List<User> users = User.find("login = ? AND password = ?", Config.getInstance().getUserLogin(), Config.getInstance().getUserPassword());
+			if(!users.isEmpty()){
+				User user = users.get(0);
+				this.game = new Game(test.getInteger("id"), (int) user.getId());
+			}
 		}
 		Base.close();
 
@@ -100,12 +107,14 @@ public final class GameController implements IGameController {
 		this.timer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				if (game.time > 1) {
-					game.time--;
-					_view.setTime(game.time);
-				} else {
-					game.lastResult = false;
-					loadNextQuestion();
+				if (game != null) {
+					if (game.time > 1) {
+						game.time--;
+						_view.setTime(game.time);
+					} else {
+						game.lastResult = false;
+						loadNextQuestion();
+					}
 				}
 			}
 		}, 1000, 1000);
@@ -114,14 +123,26 @@ public final class GameController implements IGameController {
 	private void loadNextQuestion() {
 		if (game != null) {
 			if (game.lastResult == false) {
-				mainController.getView().setState(MainState.EndGameFailed);
 				this.timer.cancel();
+				Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance()
+						.getUser(), Config.getInstance().getPassword());
+
+				Score score = new Score();
+				score.setValue(this.game.getPrice());
+				score.setTestId(this.game.testId);
+				score.setUserId(this.game.userId);
+				score.saveIt();
+
+				Base.close();
+				this.mainController.showEndGame(this.game);
+				this.game = null;
+
 			} else {
 				game.currentQuestionPos++;
 				Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance()
 						.getUser(), Config.getInstance().getPassword());
 				LazyList<TestItem> testItems = TestItem.find("test_id = ?", game.testId);
-				if (game.currentQuestionPos < testItems.size()) {
+				if (game.currentQuestionPos < testItems.size() && game.currentQuestionPos < Game.prices.length) {
 					TestItem testItem = testItems.get(game.currentQuestionPos);
 					int questionId = testItem.getQuestionId();
 					this.game.currentQuestionId = questionId;
@@ -133,12 +154,17 @@ public final class GameController implements IGameController {
 					this._view.setOptions(options.get(0).getContent(), options.get(1).getContent(), options.get(2)
 							.getContent(), options.get(3).getContent());
 
+					this._view.setPrice(Game.prices[game.currentQuestionPos]);
+
+					restartTimer();
 				} else {
-					mainController.getView().setState(MainState.EndGameSuccess);
+					this.mainController.showEndGame(this.game);
+					this.game = null;
 				}
 				Base.close();
 			}
-			restartTimer();
+		} else {
+			mainController.getView().setState(MainState.Menu);
 		}
 	}
 
@@ -171,12 +197,12 @@ public final class GameController implements IGameController {
 				rq.testId = game.testId;
 				rq.questionId = game.currentQuestionId;
 				rq.questionPos = game.currentQuestionPos;
-				rq.havePoint = option.getBoolean("is_correct");
+				rq.havePoint = option.getIsCorrect();
 				game.results.add(rq);
+				game.lastResult = rq.havePoint;
 			}
 			Base.close();
 			loadNextQuestion();
 		}
-
 	}
 }

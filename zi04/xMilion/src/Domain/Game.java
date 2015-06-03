@@ -31,20 +31,29 @@ import org.w3c.dom.NodeList;
 
 public class Game {
 	public final static int qustionsCount;
+	public final static int priceEdge;
+	public final static int[] prices;
+
 	static {
+		int[] initPrices = { 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 250000, 500000,
+				1000000 };
+		prices = initPrices;
+		priceEdge = 5;
 		qustionsCount = 15;
 	}
-	
+
 	public final int testId;
-	public int currentQuestionPos;
+	public final int userId;
 	public final ArrayList<ResultQuestion> results;
+	public int currentQuestionPos;
 
 	public boolean lastResult;
 	public int currentQuestionId;
 	public int time;
 
-	public Game(int testId) {
+	public Game(int testId, int userId) {
 		this.testId = testId;
+		this.userId = userId;
 		this.currentQuestionId = 0;
 		this.currentQuestionPos = -1;
 		this.lastResult = true;
@@ -103,13 +112,18 @@ public class Game {
 				Element elem = document.getDocumentElement();// .getRoot();.getElementById("two.worker");
 
 				NamedNodeMap rootAttrs = elem.getAttributes();
+				int userId = 0;
+				int testId = 0;
 				for (int i = 0, c = rootAttrs.getLength(); i < c; i++) {
 					Node rootAttr = rootAttrs.item(i);
 					if (rootAttr.getNodeName() == "testId") {
-						int testId = Integer.parseInt(rootAttr.getTextContent());
-						game = new Game(testId);
+						testId = Integer.parseInt(rootAttr.getTextContent());
+					}else if (rootAttr.getNodeName() == "userId") {
+						userId = Integer.parseInt(rootAttr.getTextContent());
 					}
 				}
+				
+				game = new Game(testId, userId);
 
 				NodeList rootChilds = elem.getChildNodes();
 				for (int i = 0, c = rootChilds.getLength(); i < c; i++) {
@@ -161,6 +175,10 @@ public class Game {
 				// set attribute to staff element
 				Attr rootAttr = doc.createAttribute("testId");
 				rootAttr.setValue(Integer.toString(testId));
+				rootElement.setAttributeNode(rootAttr);
+				
+				rootAttr = doc.createAttribute("userId");
+				rootAttr.setValue(Integer.toString(userId));
 				rootElement.setAttributeNode(rootAttr);
 
 				for (ResultQuestion result : results) {
@@ -218,5 +236,15 @@ public class Game {
 			};
 		}
 
+	}
+
+	public int getPrice() {
+		int priceI = this.currentQuestionPos + 1;
+		int overall = priceI % priceEdge;
+		priceI = priceI - overall - 1;
+		if (priceI > 0 && priceI < prices.length) {
+			return prices[priceI];
+		}
+		return 0;
 	}
 }

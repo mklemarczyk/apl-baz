@@ -4,6 +4,7 @@ import org.javalite.activejdbc.Base;
 
 import Domain.Config;
 import Domain.User;
+import Domain.Game;
 import GUI.Interface.IEndGameController;
 import GUI.Interface.IEndGameView;
 import GUI.Interface.IGameView;
@@ -17,27 +18,15 @@ import GUI.Interface.IMenuView;
 
 public final class MainController implements IMainController {
 	private IMainView _view;
-	
+
 	private IMenuController menu;
 	private IGameController game;
 	private IHighscoreController highscore;
 	private IEndGameController endGame;
-	
-	public MainController(IMainView view){
+
+	public MainController(IMainView view) {
 		this._view = view;
 		this._view.setController(this);
-		
-		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(), Config.getInstance().getPassword());
-		
-		User p = new User();
-		p.set("login", "Marilyn");
-		p.set("password", "Monroe");
-		p.set("email", "m@ko.pl");
-		p.set("birthdate", "1990-02-21");
-		p.set("is_player", 1);
-		p.saveIt();
-		
-		Base.close();
 	}
 
 	@Override
@@ -65,7 +54,7 @@ public final class MainController implements IMainController {
 		this.highscore.setMainController(this);
 		highscoreView.setController(this.highscore);
 	}
-	
+
 	@Override
 	public void setEndGameController(IEndGameView endGameView) {
 		this.endGame = new EndGameController(endGameView);
@@ -75,6 +64,13 @@ public final class MainController implements IMainController {
 
 	@Override
 	public IGameController getGameController() {
-		return game;
+		return this.game;
+	}
+
+	@Override
+	public void showEndGame(Game game) {
+		this.endGame.getView().setResult(game.lastResult);
+		this.endGame.getView().setPrice(game.getPrice());
+		this._view.setState(MainState.EndGame);
 	}
 }

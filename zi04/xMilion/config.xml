@@ -3,4 +3,10 @@
 		<Driver>com.mysql.jdbc.Driver</Driver>
 		<Dns>jdbc:mysql://localhost/apl-baz-pr4</Dns>
 		<User>root</User>
-		<Password>usbw</Password></Database></Configuration>
+		<Password>usbw</Password>
+	</Database>
+	<Player>
+		<User>Marilyn</User>
+		<Password>Monroe</Password>
+	</Player>
+</Configuration>

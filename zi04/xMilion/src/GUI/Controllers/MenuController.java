@@ -66,7 +66,7 @@ public class MenuController implements IMenuController {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			mainController.getView().setState(IMainController.MainState.Game);
-			Game game = new Game(0);
+			Game game = new Game(0, 0);
 			game = game.readState();
 			if (game != null) {
 				mainController.getGameController().setGame(game);

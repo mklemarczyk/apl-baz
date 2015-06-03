@@ -10,4 +10,6 @@ public interface IGameView extends GUI.Common.IWindow {
 
 	void setTime(int time);
 
+	void setPrice(int value);
+
 }

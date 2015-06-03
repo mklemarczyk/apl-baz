@@ -6,4 +6,6 @@ public interface IEndGameView extends GUI.Common.IWindow {
 
 	void setResult(boolean result);
 
+	void setPrice(int price);
+
 }

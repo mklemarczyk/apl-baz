@@ -1,11 +1,13 @@
 package GUI.Interface;
 
+import Domain.Game;
+
 public interface IMainController {
 
 	IMainView getView();
 
 	enum MainState{
-		Menu, Game, Highscore, Settings, EndGameSuccess, EndGameFailed
+		Menu, Game, Highscore, Settings, EndGame
 	}
 
 	void setMenuController(IMenuView menuView);
@@ -17,5 +19,7 @@ public interface IMainController {
 	void setEndGameController(IEndGameView endGameView);
 
 	IGameController getGameController();
+
+	void showEndGame(Game game);
 
 }

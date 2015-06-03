@@ -12,4 +12,8 @@ public class Option extends Model {
 	public String getContent() {
 		return this.getString("content");
 	}
+
+	public boolean getIsCorrect() {
+		return this.getBoolean("is_correct");
+	}
 }

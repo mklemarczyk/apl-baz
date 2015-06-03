@@ -39,15 +39,18 @@ public final class MainView extends JFrame implements IMainView {
 		this.controller.setHighscoreController(this.highscoreView);
 		this.controller.setEndGameController(this.endGameView);
 		
+		 Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		this.setMinimumSize(new Dimension(400, 400));
+		this.setMaximumSize(screenDim);
+		
 		this.setState(MainState.Menu);
 		
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
         // Determine the new location of the window
         int w = this.getSize().width;
         int h = this.getSize().height;
-        int x = (dim.width-w)/2;
-        int y = (dim.height-h)/2;
+        int x = (screenDim.width-w)/2;
+        int y = (screenDim.height-h)/2;
 
         // Move the window
         this.setLocation(x, y);
@@ -66,10 +69,7 @@ public final class MainView extends JFrame implements IMainView {
 				case Highscore:
 					this.remove(this.highscoreView);
 					break;
-				case EndGameSuccess:
-					this.remove(this.endGameView);
-					break;
-				case EndGameFailed:
+				case EndGame:
 					this.remove(this.endGameView);
 					break;
 				default:
@@ -87,13 +87,8 @@ public final class MainView extends JFrame implements IMainView {
 				case Highscore:
 					this.add(this.highscoreView);
 					break;
-				case EndGameSuccess:
+				case EndGame:
 					this.add(this.endGameView);
-					this.endGameView.setResult(true);
-					break;
-				case EndGameFailed:
-					this.add(this.endGameView);
-					this.endGameView.setResult(false);
 					break;
 				default:
 					break;
@@ -101,8 +96,10 @@ public final class MainView extends JFrame implements IMainView {
 		}
 		
 		this.state = state;
+
 		this.pack();
-		this.setSize(500,500);
+		this.setSize(new Dimension(400, 400));
+		this.repaint();
 	}
 
 	@Override
