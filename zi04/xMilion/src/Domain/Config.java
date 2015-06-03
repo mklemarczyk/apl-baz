@@ -31,6 +31,9 @@ public class Config {
 	private String dns;
 	private String user;
 	private String password;
+	
+	private String userLogin;
+	private String userPassword;
 
 	private Config() {
 		ConfigReaderLoader loader = new ConfigReaderLoader();
@@ -51,6 +54,14 @@ public class Config {
 
 	public String getPassword() {
 		return this.password;
+	}
+
+	public String getUserLogin() {
+		return this.userLogin;
+	}
+
+	public String getUserPassword() {
+		return this.userPassword;
 	}
 
 	private class ConfigReaderLoader {
@@ -111,6 +122,17 @@ public class Config {
 									password = cn.getTextContent();
 								}
 
+							}
+						}
+						if (pn.getNodeName().equals("Player")) {
+							NodeList pnodes = pn.getChildNodes();
+							for (int j = 0; j < pnodes.getLength(); j++) {
+								Node cn = pnodes.item(j);
+								if (cn.getNodeName().equals("User")) {
+									userLogin = cn.getTextContent();
+								} else if (cn.getNodeName().equals("Password")) {
+									userPassword = cn.getTextContent();
+								}
 							}
 						}
 					}
