@@ -15,6 +15,14 @@ public interface IGameController {
 	void loadNewTest();
 
 	ActionListener getAnswerEvent();
+	
+	ActionListener getAnswer1Event();
+	
+	ActionListener getAnswer2Event();
+	
+	ActionListener getAnswer3Event();
+	
+	ActionListener getAnswer4Event();
 
 	void setGame(Game game);
 

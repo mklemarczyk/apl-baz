@@ -97,10 +97,10 @@ public final class GameView extends JPanel implements IGameView {
 		this.controller = game;
 
 		this.cancelButton.addActionListener(this.controller.getCancelEvent());
-		this.answer1.addActionListener(this.controller.getAnswerEvent());
-		this.answer2.addActionListener(this.controller.getAnswerEvent());
-		this.answer3.addActionListener(this.controller.getAnswerEvent());
-		this.answer4.addActionListener(this.controller.getAnswerEvent());
+		this.answer1.addActionListener(this.controller.getAnswer1Event());
+		this.answer2.addActionListener(this.controller.getAnswer2Event());
+		this.answer3.addActionListener(this.controller.getAnswer3Event());
+		this.answer4.addActionListener(this.controller.getAnswer4Event());
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package GUI.Controllers;
 import org.javalite.activejdbc.Base;
 
 import Domain.Config;
-import Domain.User;
 import Domain.Game;
 import GUI.Interface.IEndGameController;
 import GUI.Interface.IEndGameView;
@@ -27,6 +26,17 @@ public final class MainController implements IMainController {
 	public MainController(IMainView view) {
 		this._view = view;
 		this._view.setController(this);
+
+		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
+				Config.getInstance().getPassword());
+
+		/*
+		 * User p = new User(); p.set("login", "Marilyn"); p.set("password",
+		 * "Monroe"); p.set("email", "m@ko.pl"); p.set("birthdate",
+		 * "1990-02-21"); p.set("is_player", 1); p.saveIt();
+		 * 
+		 * Base.close();
+		 */
 	}
 
 	@Override

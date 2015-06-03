@@ -2,6 +2,7 @@ package GUI.Controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -31,6 +32,9 @@ public final class GameController implements IGameController {
 	Game game;
 	Timer timer;
 
+	int correctId;
+	int[] answerId = new int[4];
+
 	public GameController(IGameView view) {
 		this._view = view;
 		this.timer = new Timer();
@@ -57,7 +61,7 @@ public final class GameController implements IGameController {
 		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
 				Config.getInstance().getPassword());
 
-		LazyList<Question> questions = Question.findAll();
+		List<Question> questions = new ArrayList<Question>(Question.findAll());
 		int range = questions.size();
 
 		if (range > 0) {
@@ -70,14 +74,17 @@ public final class GameController implements IGameController {
 			for (int i = 0; i < Game.qustionsCount; i++) {
 				int randInt = rand.nextInt(range);
 				Question question = questions.get(randInt);
+				questions.remove(randInt);
 				TestItem testItem = new TestItem();
 				testItem.setTest(test);
 				testItem.setQuestion(question);
 				testItem.saveIt();
+				range--;
 			}
 
-			List<User> users = User.find("login = ? AND password = ?", Config.getInstance().getUserLogin(), Config.getInstance().getUserPassword());
-			if(!users.isEmpty()){
+			List<User> users = User.find("login = ? AND password = ?", Config.getInstance().getUserLogin(), Config
+					.getInstance().getUserPassword());
+			if (!users.isEmpty()) {
 				User user = users.get(0);
 				this.game = new Game(test.getInteger("id"), (int) user.getId());
 			}
@@ -95,6 +102,26 @@ public final class GameController implements IGameController {
 	@Override
 	public ActionListener getAnswerEvent() {
 		return new AnswerAction();
+	}
+	
+	@Override
+	public ActionListener getAnswer1Event() {
+		return new Answer1Action();
+	}
+	
+	@Override
+	public ActionListener getAnswer2Event() {
+		return new Answer2Action();
+	}
+	
+	@Override
+	public ActionListener getAnswer3Event() {
+		return new Answer3Action();
+	}
+	
+	@Override
+	public ActionListener getAnswer4Event() {
+		return new Answer4Action();
 	}
 
 	private void restartTimer() {
@@ -154,6 +181,13 @@ public final class GameController implements IGameController {
 					this._view.setOptions(options.get(0).getContent(), options.get(1).getContent(), options.get(2)
 							.getContent(), options.get(3).getContent());
 
+					for (int i = 0; i < 4; i++) {
+						if (options.get(i).getIsCorrect()) {
+							this.correctId = (int) options.get(i).getId();
+						}
+						this.answerId[i] = (int) options.get(i).getId();
+					}
+
 					this._view.setPrice(Game.prices[game.currentQuestionPos]);
 
 					restartTimer();
@@ -183,26 +217,79 @@ public final class GameController implements IGameController {
 
 	}
 
+	private void checkOption(int i){
+		Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
+				Config.getInstance().getPassword());
+		LazyList<Option> options = Option.find("question_id = ? AND id = ?", game.currentQuestionId, this.answerId[i]);
+		ResultQuestion rq = new ResultQuestion();
+		rq.testId = game.testId;
+		rq.questionId = game.currentQuestionId;
+		rq.questionPos = game.currentQuestionPos;
+		if (options.size() > 0) {
+			Option option = options.get(0);
+			rq.havePoint = option.getIsCorrect();
+		} else {
+			System.out.println(String.format("Warning %d", i));
+		}
+		game.lastResult = rq.havePoint;
+		game.results.add(rq);
+		Base.close();
+		loadNextQuestion();
+	}
+	
 	class AnswerAction implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Base.open(Config.getInstance().getDriver(), Config.getInstance().getDns(), Config.getInstance().getUser(),
 					Config.getInstance().getPassword());
-			LazyList<Option> options = Option.find("question_id = ? AND content = ?", game.currentQuestionId,
-					arg0.getActionCommand());
+			LazyList<Option> options = Option.find("question_id = ? AND id = ?", game.currentQuestionId, correctId);
+			ResultQuestion rq = new ResultQuestion();
+			rq.testId = game.testId;
+			rq.questionId = game.currentQuestionId;
+			rq.questionPos = game.currentQuestionPos;
 			if (options.size() > 0) {
 				Option option = options.get(0);
-				ResultQuestion rq = new ResultQuestion();
-				rq.testId = game.testId;
-				rq.questionId = game.currentQuestionId;
-				rq.questionPos = game.currentQuestionPos;
 				rq.havePoint = option.getIsCorrect();
-				game.results.add(rq);
-				game.lastResult = rq.havePoint;
+			} else {
+				System.out.println(arg0.getActionCommand());
 			}
+			game.lastResult = rq.havePoint;
+			game.results.add(rq);
 			Base.close();
 			loadNextQuestion();
+		}
+	}
+	
+	class Answer1Action implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			checkOption(0);
+		}
+	}
+	
+	class Answer2Action implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			checkOption(1);
+		}
+	}
+	
+	class Answer3Action implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			checkOption(2);
+		}
+	}
+	
+	class Answer4Action implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			checkOption(3);
 		}
 	}
 }
